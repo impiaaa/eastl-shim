@@ -1,0 +1,7 @@
+#include <EASTL/map.h>
+
+namespace std {
+    using eastl::map;
+    using eastl::multimap;
+}
+

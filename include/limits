@@ -1,0 +1,8 @@
+#include <EASTL/numeric_limits.h>
+
+namespace std {
+    using eastl::numeric_limits;
+    using eastl::float_round_style;
+    using eastl::float_denorm_style;
+}
+

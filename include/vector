@@ -1,0 +1,6 @@
+#include <EASTL/vector.h>
+
+namespace std {
+    using eastl::vector;
+}
+

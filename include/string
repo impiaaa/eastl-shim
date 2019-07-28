@@ -1,0 +1,35 @@
+#include <EASTL/string.h>
+
+#ifndef __STRING_INC__
+#define __STRING_INC__
+
+namespace std {
+    //using eastl::char_traits;
+    using eastl::basic_string;
+    using eastl::string;
+    using eastl::wstring;
+    //using eastl::stoi;
+    //using eastl::stol;
+    //using eastl::stoll;
+    //using eastl::stoul;
+    //using eastl::stoull;
+    //using eastl::stof;
+    //using eastl::stod;
+    //using eastl::stold;
+    using eastl::to_string;
+    using eastl::to_wstring;
+    
+    template <class charT> class basic_ostringstream;
+    template <class CharT>
+    basic_ostringstream<CharT>&
+    operator<<(basic_ostringstream<CharT>& os,
+               const basic_string<CharT>& str) {
+        for (auto it = str.begin(); it != str.end(); it++) {
+            os.put(*it);
+        }
+        return os;
+    }
+}
+
+#endif // __STRING_INC__
+

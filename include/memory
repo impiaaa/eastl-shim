@@ -1,0 +1,35 @@
+#include <EASTL/memory.h>
+#include <EASTL/unique_ptr.h>
+#include <EASTL/shared_ptr.h>
+
+namespace std {
+    using eastl::pointer_traits;
+    using eastl::allocator;
+    using eastl::allocator_traits;
+    using eastl::allocator_arg_t;
+    using eastl::allocator_arg;
+    using eastl::uses_allocator;
+    using eastl::unique_ptr;
+    using eastl::shared_ptr;
+    using eastl::weak_ptr;
+    using eastl::owner_less;
+    using eastl::enable_shared_from_this;
+    using eastl::bad_weak_ptr;
+    using eastl::default_delete;
+    using eastl::to_address;
+    using eastl::addressof;
+    using eastl::align;
+    using eastl::assume_aligned;
+    using eastl::make_unique;
+    using eastl::make_unique_default_init;
+    using eastl::make_shared;
+    using eastl::make_shared_default_init;
+    using eastl::allocate_shared;
+    using eastl::allocate_shared_default_init;
+    using eastl::static_pointer_cast;
+    using eastl::dynamic_pointer_cast;
+    using eastl::const_pointer_cast;
+    using eastl::reinterpret_pointer_cast;
+    using eastl::get_deleter;
+}
+

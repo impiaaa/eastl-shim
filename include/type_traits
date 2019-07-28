@@ -1,0 +1,108 @@
+#include <EASTL/type_traits.h>
+
+namespace std {
+    using eastl::is_void;
+    using eastl::is_null_pointer;
+    using eastl::is_integral;
+    using eastl::is_floating_point;
+    using eastl::is_array;
+    using eastl::is_enum;
+    using eastl::is_union;
+    using eastl::is_class;
+    using eastl::is_function;
+    using eastl::is_pointer;
+    using eastl::is_rvalue_reference;
+    using eastl::is_lvalue_reference;
+    using eastl::is_member_object_pointer;
+    using eastl::is_member_function_pointer;
+    
+    using eastl::is_fundamental;
+    using eastl::is_arithmetic;
+    using eastl::is_scalar;
+    using eastl::is_object;
+    using eastl::is_compound;
+    using eastl::is_reference;
+    using eastl::is_member_pointer;
+    
+    using eastl::is_const;
+    using eastl::is_volatile;
+    using eastl::is_trivial;
+    using eastl::is_trivially_copyable;
+    using eastl::is_standard_layout;
+    using eastl::is_pod;
+    using eastl::is_literal_type;
+    using eastl::is_empty;
+    using eastl::is_polymorphic;
+    using eastl::is_abstract;
+    using eastl::is_signed;
+    using eastl::is_unsigned;
+    
+    using eastl::is_constructible;
+    using eastl::is_trivially_constructible;
+    using eastl::is_nothrow_constructible;
+    using eastl::is_default_constructible;
+    using eastl::is_trivially_default_constructible;
+    using eastl::is_nothrow_default_constructible;
+    using eastl::is_copy_constructible;
+    using eastl::is_trivially_copy_constructible;
+    using eastl::is_nothrow_copy_constructible;
+    using eastl::is_move_constructible;
+    using eastl::is_trivially_move_constructible;
+    using eastl::is_nothrow_move_constructible;
+    using eastl::is_assignable;
+    using eastl::is_trivially_assignable;
+    using eastl::is_nothrow_assignable;
+    using eastl::is_copy_assignable;
+    using eastl::is_trivially_copy_assignable;
+    using eastl::is_nothrow_copy_assignable;
+    using eastl::is_move_assignable;
+    using eastl::is_trivially_move_assignable;
+    using eastl::is_nothrow_move_assignable;
+    using eastl::is_destructible;
+    using eastl::is_trivially_destructible;
+    using eastl::is_nothrow_destructible;
+    using eastl::has_virtual_destructor;
+    
+    using eastl::alignment_of;
+    using eastl::rank;
+    using eastl::extent;
+    
+    using eastl::is_same;
+    using eastl::is_base_of;
+    using eastl::is_convertible;
+    
+    using eastl::remove_cv;
+    using eastl::remove_const;
+    using eastl::remove_volatile;
+    using eastl::add_cv;
+    using eastl::add_const;
+    using eastl::add_volatile;
+    
+    using eastl::remove_reference;
+    using eastl::add_lvalue_reference;
+    using eastl::add_rvalue_reference;
+    
+    using eastl::remove_pointer;
+    using eastl::add_pointer;
+    
+    using eastl::make_signed;
+    using eastl::make_unsigned;
+    
+    using eastl::remove_extent;
+    using eastl::remove_all_extents;
+    
+    using eastl::aligned_storage;
+    using eastl::aligned_union;
+    using eastl::decay;
+    using eastl::enable_if;
+    using eastl::conditional;
+    using eastl::common_type;
+    using eastl::underlying_type;
+    using eastl::result_of;
+    
+    using eastl::integral_constant;
+    using eastl::bool_constant;
+    using eastl::true_type;
+    using eastl::false_type;
+}
+

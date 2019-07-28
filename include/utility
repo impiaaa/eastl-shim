@@ -1,0 +1,27 @@
+#include <EASTL/utility.h>
+
+namespace std {
+    using eastl::swap;
+    using eastl::exchange;
+    using eastl::forward;
+    using eastl::move;
+    using eastl::add_const_t;
+    using eastl::as_const;
+    using eastl::declval;
+    using eastl::integer_sequence;
+    using eastl::make_integer_sequence;
+    using eastl::index_sequence_for;
+    using eastl::pair;
+    using eastl::make_pair;
+    using eastl::tuple_size;
+    using eastl::tuple_element;
+    using eastl::tuple_element_t;
+    using eastl::get;
+    using eastl::piecewise_construct_t;
+    using eastl::piecewise_construct;
+    using eastl::in_place_t;
+    using eastl::in_place;
+    using eastl::in_place_type_t;
+    using eastl::in_place_index_t;
+}
+

@@ -1,0 +1,67 @@
+#include <string>
+#include <vector>
+
+namespace std {
+    template <class charT>
+    class basic_ostringstream {
+     public:
+        // types:
+        typedef charT char_type;
+     
+        // Constructors/destructor:
+        explicit basic_ostringstream() { }
+        explicit basic_ostringstream(const basic_string<charT>& str) :
+                                     backing(str.begin(), str.end()) { }
+         basic_ostringstream(const basic_ostringstream& rhs) = delete;
+         basic_ostringstream(basic_ostringstream&& rhs) :
+            backing(rhs.backing) { }
+     
+        // Assign/swap:
+        basic_ostringstream& operator=(const basic_ostringstream& rhs) = delete;
+        basic_ostringstream& operator=(basic_ostringstream&& rhs) {
+            backing = rhs.backing;
+        }
+        //void swap(basic_ostringstream& rhs);
+     
+        // Members:
+        //basic_stringbuf<charT,traits,Allocator>* rdbuf() const;
+        basic_string<charT> str() const {
+            return basic_string<charT>(backing.data(), backing.size());
+        }
+        //void str(const basic_string<charT,traits,Allocator>& s);
+     
+        /*basic_ostream& operator<<( short value );
+        basic_ostream& operator<<( unsigned short value );
+        basic_ostream& operator<<( int value );
+        basic_ostream& operator<<( unsigned int value );
+        basic_ostream& operator<<( long value );
+        basic_ostream& operator<<( unsigned long value );
+        basic_ostream& operator<<( float value );
+        basic_ostream& operator<<( double value );
+        basic_ostream& operator<<( long double value );
+        basic_ostream& operator<<( bool value );
+        basic_ostream& operator<<( const void* value );
+        basic_ostream& operator<<( std::basic_streambuf<CharT, Traits>* sb);*/
+        
+        basic_ostringstream& put( charT ch ) {
+            backing.push_back(ch);
+            return *this;
+        }
+        
+     private:
+        vector<charT> backing;
+    };
+    
+    template< class CharT >
+    basic_ostringstream<CharT>& operator<<( basic_ostringstream<CharT>& os,
+                                            const CharT* s ) {
+        while (*s != '\0') {
+            os.put(*s);
+            s++;
+        }
+        return os;
+    }
+    
+    typedef basic_ostringstream<char> ostringstream;
+}
+
