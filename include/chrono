@@ -1,0 +1,50 @@
+#include <ratio>
+
+#pragma once
+
+namespace std {
+    namespace chrono {
+		template <typename Rep, typename Period = ratio<1>>
+		class duration;
+	
+		template <class Rep>
+		struct treat_as_floating_point : is_floating_point<Rep> {};
+
+		template <class Rep, class Period>
+		class duration
+		{
+			Rep mRep;	
+
+		public:
+			typedef Rep rep;
+			typedef Period period;
+			typedef duration<Rep, Period> this_type;
+
+			EA_CONSTEXPR duration() 
+				: mRep() {}
+
+			duration(const duration& other)
+				: mRep(Rep(other.mRep)) {}
+
+			duration& operator=(const duration& other)
+				{ mRep = other.mRep; return *this; }
+
+			template <class Rep2>
+			inline EA_CONSTEXPR explicit duration(
+				const Rep2& rep2,
+				typename eastl::enable_if<eastl::is_convertible<Rep2, Rep>::value &&
+				                          (treat_as_floating_point<Rep>::value ||
+				                           !treat_as_floating_point<Rep2>::value)>::type** = 0)
+				: mRep(static_cast<Rep>(rep2)) {}
+
+		};
+
+		typedef duration<long long, nano> nanoseconds;
+		typedef duration<long long, micro> microseconds;
+		typedef duration<long long, milli> milliseconds;
+		typedef duration<long long> seconds;
+		typedef duration<int, ratio<60>> minutes;
+		typedef duration<int, ratio<3600>> hours;
+    }
+}
+

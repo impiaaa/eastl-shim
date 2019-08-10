@@ -1,0 +1,8 @@
+#include <chrono>
+
+namespace std {
+    namespace this_thread {
+        template< class Rep, class Period > void sleep_for( const std::chrono::duration<Rep, Period>& sleep_duration ) { }
+    }
+}
+
