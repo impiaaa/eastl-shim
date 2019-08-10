@@ -1,0 +1,6 @@
+#include <EASTL/deque.h>
+
+namespace std {
+    using eastl::deque;
+}
+

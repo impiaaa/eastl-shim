@@ -1,0 +1,6 @@
+#include <EASTL/list.h>
+
+namespace std {
+    using eastl::list;
+}
+

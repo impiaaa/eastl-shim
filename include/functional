@@ -1,0 +1,23 @@
+#include <EASTL/functional.h>
+
+namespace std {
+    using eastl::function;
+    using eastl::mem_fn;
+    using eastl::plus;
+    using eastl::minus;
+    using eastl::multiplies;
+    using eastl::divides;
+    using eastl::modulus;
+    using eastl::negate;
+    using eastl::equal_to;
+    using eastl::not_equal_to;
+    using eastl::greater;
+    using eastl::less;
+    using eastl::greater_equal;
+    using eastl::less_equal;
+    using eastl::logical_and;
+    using eastl::logical_or;
+    using eastl::logical_not;
+    using eastl::not_fn;
+}
+
