@@ -1,0 +1,22 @@
+#include <EASTL/ratio.h>
+
+namespace std {
+    using eastl::ratio;
+    using eastl::atto;
+    using eastl::femto;
+    using eastl::pico;
+    using eastl::nano;
+    using eastl::micro;
+    using eastl::milli;
+    using eastl::centi;
+    using eastl::deci;
+    using eastl::deca;
+    using eastl::hecto;
+    using eastl::kilo;
+    using eastl::mega;
+    using eastl::giga;
+    using eastl::tera;
+    using eastl::peta;
+    using eastl::exa;
+}
+
