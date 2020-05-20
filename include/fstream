@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+namespace std {
+    class basic_fstream {
+    public:
+        basic_fstream(const char* s) : f(NULL) {
+            open(s);
+        }
+        virtual ~basic_fstream() {
+            if (is_open()) {
+                close();
+            }
+        }
+        virtual void open(const char* s) = 0;
+        bool is_open() const {
+            return f != NULL;
+        }
+        void close() {
+            fclose(f);
+            f = NULL;
+        }
+    protected:
+        FILE* f;
+    };
+    
+    template <class charT>
+    class basic_ofstream : public basic_fstream {
+    public:
+        basic_ofstream(const char* s) : basic_fstream(s) { }
+        virtual ~basic_ofstream() { }
+        virtual void open(const char* s) {
+            f = fopen(s, "wb");
+        }
+        basic_ofstream& write(const charT* s, size_t count) {
+            fwrite(s, sizeof(charT), count, f);
+            return *this;
+        }
+    };
+    typedef basic_ofstream<char> ofstream;
+    
+    template <class charT>
+    class basic_ifstream : public basic_fstream {
+    public:
+        basic_ifstream(const char* s) : basic_fstream(s) { }
+        virtual ~basic_ifstream() { }
+        virtual void open(const char* s) {
+            f = fopen(s, "rb");
+        }
+        basic_ifstream& read(charT* s, size_t count) {
+            fread(s, sizeof(charT), count, f);
+            return *this;
+        }
+        long tellg() {
+            return ftell(f);
+        }
+    };
+    typedef basic_ifstream<char> ifstream;
+}
+
