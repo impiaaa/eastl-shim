@@ -1,0 +1,6 @@
+#include <EASTL/set.h>
+
+namespace std {
+    using eastl::set;
+}
+
