@@ -1,6 +1,8 @@
 #include <string>
 #include <vector>
 
+#include <EASTL/algorithm.h> // for find
+
 namespace std {
     template <class charT>
     class basic_ostringstream {
@@ -63,5 +65,25 @@ namespace std {
     }
     
     typedef basic_ostringstream<char> ostringstream;
+    
+    template <class charT>
+    class basic_istringstream {
+     public:
+        explicit basic_istringstream() { }
+        explicit basic_istringstream(const basic_string<charT>& str) :
+                                     backing(str.begin(), str.end()) { }
+        basic_istringstream<charT>& getline(basic_string<charT>& str, charT delim) {
+            auto i = eastl::find(backing.begin(), backing.end(), delim);
+            str.replace(str.begin(), str.end(), basic_string<charT>(backing.begin(), i));
+            backing.erase(backing.begin(), i);
+            return *this;
+        }
+        operator bool() {
+            return !backing.empty();
+        }
+     private:
+        vector<charT> backing;
+    };
+    typedef basic_istringstream<char> istringstream;
 }
 

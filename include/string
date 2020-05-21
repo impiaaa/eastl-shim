@@ -29,6 +29,14 @@ namespace std {
         }
         return os;
     }
+    
+    template <class charT> class basic_istringstream;
+    template <class CharT>
+    basic_istringstream<CharT>& getline(basic_istringstream<CharT>& input,
+                                        basic_string<CharT>& str,
+                                        CharT delim) {
+        return input.getline(str, delim);
+    }
 }
 
 #endif // __STRING_INC__
