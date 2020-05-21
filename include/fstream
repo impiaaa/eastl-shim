@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ios>
 
 namespace std {
     class basic_fstream {
@@ -6,18 +7,87 @@ namespace std {
         basic_fstream(const char* s) : f(NULL) {
             open(s);
         }
+        basic_fstream(const char* s, ios::openmode mode) : f(NULL) {
+            open(s, mode);
+        }
         virtual ~basic_fstream() {
             if (is_open()) {
                 close();
             }
         }
-        virtual void open(const char* s) = 0;
+        virtual void open(const char* s, ios::openmode mode) = 0;
+        virtual void open(const char* s) {
+            open(s, ios::binary);
+        }
+        virtual void _open(const char* s, ios::openmode mode) {
+            char smode[4] = {0};
+            if (mode&ios::app) {
+                smode[0] = 'a';
+                if (mode&ios::in) {
+                    smode[1] = '+';
+                }
+            }
+            else if (mode&ios::out) {
+                smode[0] = 'w';
+                if (mode&ios::in) {
+                    smode[1] = '+';
+                    if (!(mode&ios::trunc)) {
+                        smode[0] = 'r';
+                    }
+                }
+            }
+            else if (mode&ios::in) {
+                smode[0] = 'r';
+            }
+            if (mode&ios::binary) {
+                if (smode[0] == '\0') {
+                    smode[0] = 'b';
+                }
+                else if (smode[1] == '\0') {
+                    smode[1] = 'b';
+                }
+                else if (smode[2] == '\0') {
+                    smode[2] = 'b';
+                }
+            }
+            f = fopen(s, smode);
+            if (mode&ios::ate) {
+                fseek(f, 0, SEEK_END);
+            }
+        }
         bool is_open() const {
             return f != NULL;
         }
         void close() {
             fclose(f);
             f = NULL;
+        }
+        long tellg() {
+            return ftell(f);
+        }
+        bool good() {
+            return !ferror(f);
+        }
+        basic_fstream& seekg(size_t pos, ios::seekdir dir) {
+            int whence;
+            switch (dir) {
+            case ios::beg:
+                whence = SEEK_SET;
+                break;
+            case ios::end:
+                whence = SEEK_END;
+                break;
+            case ios::cur:
+                whence = SEEK_CUR;
+                break;
+            default:
+                return *this;
+            }
+            fseek(f, pos, whence);
+            return *this;
+        }
+        operator bool() {
+            return good() && is_open();
         }
     protected:
         FILE* f;
@@ -27,9 +97,11 @@ namespace std {
     class basic_ofstream : public basic_fstream {
     public:
         basic_ofstream(const char* s) : basic_fstream(s) { }
+        basic_ofstream(const char* s, ios::openmode mode) :
+            basic_fstream(s, mode|ios::out) { }
         virtual ~basic_ofstream() { }
-        virtual void open(const char* s) {
-            f = fopen(s, "wb");
+        virtual void open(const char* s, ios::openmode mode) {
+            _open(s, mode|ios::out);
         }
         basic_ofstream& write(const charT* s, size_t count) {
             fwrite(s, sizeof(charT), count, f);
@@ -42,16 +114,15 @@ namespace std {
     class basic_ifstream : public basic_fstream {
     public:
         basic_ifstream(const char* s) : basic_fstream(s) { }
+        basic_ifstream(const char* s, ios::openmode mode) :
+            basic_fstream(s, mode|ios::in) { }
         virtual ~basic_ifstream() { }
-        virtual void open(const char* s) {
-            f = fopen(s, "rb");
+        virtual void open(const char* s, ios::openmode mode) {
+            _open(s, mode|ios::in);
         }
         basic_ifstream& read(charT* s, size_t count) {
             fread(s, sizeof(charT), count, f);
             return *this;
-        }
-        long tellg() {
-            return ftell(f);
         }
     };
     typedef basic_ifstream<char> ifstream;

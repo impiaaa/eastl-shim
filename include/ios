@@ -1,0 +1,33 @@
+namespace std {
+    enum _openmode { 
+      _app = 1L << 0,
+      _ate = 1L << 1,
+      _binary = 1L << 2,
+      _in = 1L << 3,
+      _out = 1L << 4,
+      _trunc = 1L << 5
+    };
+    inline constexpr _openmode operator|(_openmode a, _openmode b) {
+        return _openmode(static_cast<int>(a) | static_cast<int>(b));
+    }
+    enum _seekdir {
+        _beg,
+        _end,
+        _cur
+    };
+    class ios {
+        public:
+            typedef _openmode openmode;
+            static const openmode app = _app;
+            static const openmode binary = _binary;
+            static const openmode in = _in;
+            static const openmode out = _out;
+            static const openmode trunc = _trunc;
+            static const openmode ate = _ate;
+            typedef _seekdir seekdir;
+            static const seekdir beg = _beg;
+            static const seekdir end = _end;
+            static const seekdir cur = _cur;
+    };
+}
+
