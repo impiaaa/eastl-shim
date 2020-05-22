@@ -1,0 +1,51 @@
+#include <EASTL/iterator.h>
+
+namespace std {
+    using eastl::iterator_traits;
+    using eastl::input_iterator_tag;
+    using eastl::output_iterator_tag;
+    using eastl::forward_iterator_tag;
+    using eastl::bidirectional_iterator_tag;
+    using eastl::random_access_iterator_tag;
+    using eastl::contiguous_iterator_tag;
+    using eastl::iterator;
+    using eastl::reverse_iterator;
+    using eastl::move_iterator;
+    using eastl::back_insert_iterator;
+    using eastl::front_insert_iterator;
+    using eastl::insert_iterator;
+    using eastl::make_reverse_iterator;
+    using eastl::make_move_iterator;
+    using eastl::front_inserter;
+    using eastl::back_inserter;
+    using eastl::inserter;
+    using eastl::operator==;
+    using eastl::operator!=;
+    using eastl::operator+;
+    using eastl::operator-;
+    using eastl::operator==;
+    using eastl::operator!=;
+    using eastl::operator+;
+    using eastl::operator-;
+    using eastl::operator==;
+    using eastl::operator!=;
+    using eastl::operator==;
+    using eastl::operator!=;
+    using eastl::advance;
+    using eastl::distance;
+    using eastl::next;
+    using eastl::prev;
+    using eastl::begin;
+    using eastl::cbegin;
+    using eastl::end;
+    using eastl::cend;
+    using eastl::rbegin;
+    using eastl::crbegin;
+    using eastl::rend;
+    using eastl::crend;
+    using eastl::size;
+    using eastl::ssize;
+    using eastl::empty;
+    using eastl::data;
+}
+
