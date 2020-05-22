@@ -41,8 +41,14 @@ namespace std {
         basic_ostream& operator<<( float value );
         basic_ostream& operator<<( double value );
         basic_ostream& operator<<( long double value );
-        basic_ostream& operator<<( bool value );
-        basic_ostream& operator<<( const void* value );*/
+        basic_ostream& operator<<( bool value );*/
+        basic_ostringstream& operator<<( const void* value ) {
+            size_t sz = backing.size();
+            backing.resize(sz+18);
+            int n = sprintf(backing.data()+sz, "%p", value);
+            backing.resize(sz+n);
+            return *this;
+        }
         basic_ostringstream& operator<<( FILE* sb) {
             int c;
             while ((c = fgetc(sb)) != EOF) {
