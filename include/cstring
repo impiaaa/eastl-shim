@@ -1,1 +1,27 @@
 #include <string.h>
+
+namespace std {
+    using ::strcpy;
+    using ::strncpy;
+    using ::strcat;
+    using ::strncat;
+    using ::strxfrm;
+    using ::strlen;
+    using ::strcmp;
+    using ::strncmp;
+    using ::strcoll;
+    using ::strchr;
+    using ::strrchr;
+    using ::strspn;
+    using ::strcspn;
+    using ::strpbrk;
+    using ::strstr;
+    using ::strtok;
+    using ::memchr;
+    using ::memcmp;
+    using ::memset;
+    using ::memcpy;
+    using ::memmove;
+    using ::strerror;
+}
+
