@@ -3,9 +3,7 @@
 #ifndef __NEW_INC__
 #define __NEW_INC__
 
-void* operator new(size_t count, void* ptr) {
-    return ptr;
-}
+void* operator new(size_t count, void* ptr);
 
 #endif // __NEW_INC__
 
