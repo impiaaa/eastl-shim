@@ -15,7 +15,7 @@ namespace std {
                 close();
             }
         }
-        virtual void open(const char* s, ios::openmode mode) = 0;
+        virtual void open(const char* s, ios::openmode mode) { };
         virtual void open(const char* s) {
             open(s, ios::binary);
         }
@@ -102,12 +102,21 @@ namespace std {
         basic_ofstream(const char* s) : basic_fstream(s) { }
         basic_ofstream(const char* s, ios::openmode mode) :
             basic_fstream(s, mode|ios::out) { }
+        basic_ofstream(string s) : basic_ofstream(s.c_str()) {
+        }
         virtual ~basic_ofstream() { }
         virtual void open(const char* s, ios::openmode mode) {
             _open(s, mode|ios::out);
         }
         basic_ofstream& write(const charT* s, size_t count) {
             fwrite(s, sizeof(charT), count, f);
+            return *this;
+        }
+        basic_ofstream& operator<<( FILE* sb) {
+            int c;
+            while ((c = fgetc(sb)) != EOF) {
+                fputc(c, f);
+            }
             return *this;
         }
     };
