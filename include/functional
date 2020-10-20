@@ -3,6 +3,7 @@
 namespace std {
     using eastl::function;
     using eastl::mem_fn;
+    using eastl::hash;
     using eastl::plus;
     using eastl::minus;
     using eastl::multiplies;

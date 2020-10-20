@@ -128,8 +128,9 @@ namespace std {
         basic_ifstream(const char* s) : basic_fstream(s) { }
         basic_ifstream(const char* s, ios::openmode mode) :
             basic_fstream(s, mode|ios::in) { }
-        basic_ifstream(string s) : basic_ifstream(s.c_str()) {
-        }
+        basic_ifstream(string s) : basic_ifstream(s.c_str()) { }
+        basic_ifstream(string s, ios::openmode mode) :
+            basic_fstream(s.c_str(), mode|ios::in) { }
         virtual ~basic_ifstream() { }
         virtual void open(const char* s, ios::openmode mode) {
             _open(s, mode|ios::in);

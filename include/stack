@@ -1,0 +1,6 @@
+#include <EASTL/stack.h>
+
+namespace std {
+    using eastl::stack;
+}
+

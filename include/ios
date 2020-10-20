@@ -29,5 +29,6 @@ namespace std {
             static const seekdir end = _end;
             static const seekdir cur = _cur;
     };
+    using ios_base=ios;
 }
 

@@ -1,0 +1,7 @@
+#include <EASTL/unordered_map.h>
+
+namespace std {
+    using eastl::unordered_map;
+    using eastl::unordered_multimap;
+}
+
