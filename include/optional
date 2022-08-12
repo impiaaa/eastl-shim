@@ -1,0 +1,14 @@
+#include <EASTL/optional.h>
+
+#ifndef __OPTIONAL_INC__
+#define __OPTIONAL_INC__
+
+namespace std {
+    using eastl::optional;
+    using eastl::nullopt_t;
+    using eastl::nullopt;
+    using eastl::make_optional;
+}
+
+#endif
+

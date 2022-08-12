@@ -1,0 +1,17 @@
+#include <EASTL/string_view.h>
+
+#ifndef __STRING_VIEW_INC__
+#define __STRING_VIEW_INC__
+
+namespace std {
+    using eastl::basic_string_view;
+    using eastl::string_view;
+    using eastl::wstring_view;
+    using eastl::u8string_view;
+    using eastl::u16string_view;
+    using eastl::u32string_view;
+    using eastl::hash;
+}
+
+#endif
+
