@@ -2,5 +2,6 @@
 
 namespace std {
     using eastl::set;
+    using eastl::multiset;
 }
 

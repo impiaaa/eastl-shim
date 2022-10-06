@@ -1,0 +1,7 @@
+#include <EASTL/unordered_set.h>
+
+namespace std {
+    using eastl::unordered_set;
+    using eastl::unordered_multiset;
+}
+
