@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <ios>
+#include <EASTL/algorithm.h>
 
 namespace std {
-    class basic_fstream {
+    template <class charT>
+    class basic_fstream : public ios {
     public:
+        basic_fstream() : f(NULL) { }
         basic_fstream(const char* s) : f(NULL) {
             open(s);
         }
@@ -15,9 +18,17 @@ namespace std {
                 close();
             }
         }
-        virtual void open(const char* s, ios::openmode mode) { };
+        virtual void open(const char* s, ios::openmode mode) {
+            _open(s, mode);
+        };
         virtual void open(const char* s) {
             open(s, ios::binary);
+        }
+        virtual void open(const std::string s) {
+            open(s.c_str(), ios::binary);
+        }
+        virtual void open(const std::string s, ios::openmode mode) {
+            open(s.c_str(), mode);
         }
         virtual void _open(const char* s, ios::openmode mode) {
             char smode[4] = {0};
@@ -66,7 +77,36 @@ namespace std {
             return ftell(f);
         }
         bool good() {
-            return !ferror(f);
+            return is_open() && ferror(f) == 0;
+        }
+        bool fail() {
+            return !good();
+        }
+        bool operator!() {
+            return fail();
+        }
+        bool bad() {
+            return !good();
+        }
+        bool eof() {
+            return feof(f);
+        }
+        void clear() {
+            clearerr(f);
+        }
+        void setstate(iostate state) {
+            // TODO
+        }
+        void unget() {
+            fseek(f, -1, SEEK_CUR);
+        }
+        charT peek() {
+            charT c = get();
+            unget();
+            return c;
+        }
+        charT get() {
+            return fgetc(f);
         }
         basic_fstream& seekg(size_t pos, ios::seekdir dir) {
             int whence;
@@ -87,57 +127,70 @@ namespace std {
             return *this;
         }
         operator bool() {
-            return good() && is_open();
+            return good();
         }
         FILE* rdbuf() {
             return f;
         }
-    protected:
-        FILE* f;
-    };
-    
-    template <class charT>
-    class basic_ofstream : public basic_fstream {
-    public:
-        basic_ofstream(const char* s) : basic_fstream(s) { }
-        basic_ofstream(const char* s, ios::openmode mode) :
-            basic_fstream(s, mode|ios::out) { }
-        basic_ofstream(string s) : basic_ofstream(s.c_str()) {
-        }
-        virtual ~basic_ofstream() { }
-        virtual void open(const char* s, ios::openmode mode) {
-            _open(s, mode|ios::out);
-        }
-        basic_ofstream& write(const charT* s, size_t count) {
+        basic_fstream& write(const charT* s, size_t count) {
             fwrite(s, sizeof(charT), count, f);
             return *this;
         }
-        basic_ofstream& operator<<( FILE* sb) {
+        basic_fstream& operator<<( FILE* sb) {
             int c;
             while ((c = fgetc(sb)) != EOF) {
                 fputc(c, f);
             }
             return *this;
         }
+        basic_fstream& operator<<( const charT* s) {
+            for (; *s != 0; s++) {
+                fputc(*s, f);
+            }
+            return *this;
+        }
+        basic_fstream& operator<<( const std::string s) {
+            return (*this)<<s.c_str();
+        }
+        basic_fstream& read(charT* s, size_t count) {
+            fread(s, sizeof(charT), count, f);
+            return *this;
+        }
+        void swap(basic_fstream& rhs) {
+            eastl::swap(f, rhs.f);
+        }
+    protected:
+        FILE* f;
+    };
+    typedef basic_fstream<char> fstream;
+    
+    template <class charT>
+    class basic_ofstream : public basic_fstream<charT> {
+    public:
+        basic_ofstream(const char* s) : basic_fstream<charT>(s) { }
+        basic_ofstream(const char* s, ios::openmode mode) :
+            basic_fstream<charT>(s, mode|ios::out) { }
+        basic_ofstream(string s) : basic_ofstream(s.c_str()) {
+        }
+        virtual ~basic_ofstream() { }
+        virtual void open(const char* s, ios::openmode mode) {
+            basic_fstream<charT>::_open(s, mode|ios::out);
+        }
     };
     typedef basic_ofstream<char> ofstream;
     
     template <class charT>
-    class basic_ifstream : public basic_fstream {
+    class basic_ifstream : public basic_fstream<charT> {
     public:
-        basic_ifstream(const char* s) : basic_fstream(s) { }
+        basic_ifstream(const char* s) : basic_fstream<charT>(s) { }
         basic_ifstream(const char* s, ios::openmode mode) :
-            basic_fstream(s, mode|ios::in) { }
+            basic_fstream<charT>(s, mode|ios::in) { }
         basic_ifstream(string s) : basic_ifstream(s.c_str()) { }
         basic_ifstream(string s, ios::openmode mode) :
-            basic_fstream(s.c_str(), mode|ios::in) { }
+            basic_fstream<charT>(s.c_str(), mode|ios::in) { }
         virtual ~basic_ifstream() { }
         virtual void open(const char* s, ios::openmode mode) {
-            _open(s, mode|ios::in);
-        }
-        basic_ifstream& read(charT* s, size_t count) {
-            fread(s, sizeof(charT), count, f);
-            return *this;
+            basic_fstream<charT>::_open(s, mode|ios::in);
         }
     };
     typedef basic_ifstream<char> ifstream;

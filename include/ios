@@ -15,6 +15,12 @@ namespace std {
         _end,
         _cur
     };
+    enum _iostate {
+        _goodbit,
+        _badbit,
+        _failbit,
+        _eofbit
+    };
     class ios {
         public:
             typedef _openmode openmode;
@@ -28,6 +34,11 @@ namespace std {
             static const seekdir beg = _beg;
             static const seekdir end = _end;
             static const seekdir cur = _cur;
+            typedef _iostate iostate;
+            static const iostate goodbit = _goodbit;
+            static const iostate badbit = _badbit;
+            static const iostate failbit = _failbit;
+            static const iostate eofbit = _eofbit;
     };
     using ios_base=ios;
 }
