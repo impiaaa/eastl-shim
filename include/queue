@@ -1,0 +1,9 @@
+#include <EASTL/queue.h>
+#include <EASTL/priority_queue.h>
+ 
+namespace std {
+  using eastl::queue;
+  using eastl::swap;
+  using eastl::priority_queue;
+}
+
