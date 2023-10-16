@@ -1,4 +1,5 @@
 #include <EASTL/string.h>
+#include <stdlib.h>
 
 #ifndef __STRING_INC__
 #define __STRING_INC__
@@ -13,9 +14,55 @@ namespace std {
     //using eastl::stoll;
     //using eastl::stoul;
     //using eastl::stoull;
-    //using eastl::stof;
-    //using eastl::stod;
-    //using eastl::stold;
+    inline float stof ( const eastl::string& str, ::size_t* pos = nullptr ) {
+        char* ptr;
+        float ret = ::strtof(str.c_str(), &ptr);
+        if (pos != nullptr) {
+            *pos = ptr-str.c_str();
+        }
+        return ret;
+    }
+    inline float stof ( const eastl::wstring& str, ::size_t* pos = nullptr ) {
+        wchar_t* ptr;
+        float ret = ::wcstof(str.c_str(), &ptr);
+        if (pos != nullptr) {
+            *pos = ptr-str.c_str();
+        }
+        return ret;
+    }
+    inline double stod ( const eastl::string& str, ::size_t* pos = nullptr ) {
+        char* ptr;
+        double ret = ::strtod(str.c_str(), &ptr);
+        if (pos != nullptr) {
+            *pos = ptr-str.c_str();
+        }
+        return ret;
+    }
+    inline double stod ( const eastl::wstring& str, ::size_t* pos = nullptr ) {
+        wchar_t* ptr;
+        double ret = ::wcstod(str.c_str(), &ptr);
+        if (pos != nullptr) {
+            *pos = ptr-str.c_str();
+        }
+        return ret;
+    }
+    inline long double stold( const eastl::string& str, ::size_t* pos = nullptr ) {
+        char* ptr;
+        long double ret = ::strtold(str.c_str(), &ptr);
+        if (pos != nullptr) {
+            *pos = ptr-str.c_str();
+        }
+        return ret;
+    }
+    inline long double stold( const eastl::wstring& str, ::size_t* pos = nullptr ) {
+        wchar_t* ptr;
+        long double ret = ::wcstold(str.c_str(), &ptr);
+        if (pos != nullptr) {
+            *pos = ptr-str.c_str();
+        }
+        return ret;
+    }
+    
     using eastl::to_string;
     using eastl::to_wstring;
     
