@@ -84,6 +84,22 @@ namespace std {
                                         CharT delim) {
         return input.getline(str, delim);
     }
+    
+    template <class charT> class basic_fstream;
+    template <class CharT>
+    basic_fstream<CharT>& getline(basic_fstream<CharT>& input,
+                                  basic_string<CharT>& str,
+                                  CharT delim='\n') {
+        str.erase();
+        for (size_t i = 0; i < str.max_size() && !input.eof(); i++) {
+            CharT c = input.get();
+            if (c == delim) {
+                break;
+            }
+            str.push_back(c);
+        }
+        return input;
+    }
 }
 
 #endif // __STRING_INC__

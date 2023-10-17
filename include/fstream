@@ -2,15 +2,17 @@
 #include <ios>
 #include <EASTL/algorithm.h>
 
+#pragma once
+
 namespace std {
     template <class charT>
     class basic_fstream : public ios {
     public:
-        basic_fstream() : f(NULL) { }
-        basic_fstream(const char* s) : f(NULL) {
+        basic_fstream() : f(NULL), fmt("%") { }
+        basic_fstream(const char* s) : f(NULL), fmt("%") {
             open(s);
         }
-        basic_fstream(const char* s, ios::openmode mode) : f(NULL) {
+        basic_fstream(const char* s, ios::openmode mode) : f(NULL), fmt("%") {
             open(s, mode);
         }
         virtual ~basic_fstream() {
@@ -24,10 +26,10 @@ namespace std {
         virtual void open(const char* s) {
             open(s, ios::binary);
         }
-        virtual void open(const std::string s) {
+        virtual void open(const eastl::string s) {
             open(s.c_str(), ios::binary);
         }
-        virtual void open(const std::string s, ios::openmode mode) {
+        virtual void open(const eastl::string s, ios::openmode mode) {
             open(s.c_str(), mode);
         }
         virtual void _open(const char* s, ios::openmode mode) {
@@ -95,7 +97,18 @@ namespace std {
             clearerr(f);
         }
         void setstate(iostate state) {
-            // TODO
+            if (state & ios::goodbit) {
+                clear();
+            }
+            if (state & ios::badbit) {
+                abort();
+            }
+            if (state & ios::failbit) {
+                abort();
+            }
+            if (state & ios::eofbit) {
+                fseek(f, 0, SEEK_END);
+            }
         }
         void unget() {
             fseek(f, -1, SEEK_CUR);
@@ -106,9 +119,14 @@ namespace std {
             return c;
         }
         charT get() {
-            return fgetc(f);
+            charT c;
+            fread(&c, sizeof(charT), 1, f);
+            return c;
         }
-        basic_fstream& seekg(size_t pos, ios::seekdir dir) {
+        void put(charT c) {
+            fwrite(&c, sizeof(charT), 1, f);
+        }
+        basic_fstream& seekg(size_t pos, ios::seekdir dir=ios::beg) {
             int whence;
             switch (dir) {
             case ios::beg:
@@ -136,21 +154,31 @@ namespace std {
             fwrite(s, sizeof(charT), count, f);
             return *this;
         }
-        basic_fstream& operator<<( FILE* sb) {
+        basic_fstream& operator<<(FILE* sb) {
             int c;
             while ((c = fgetc(sb)) != EOF) {
-                fputc(c, f);
+                put(c);
             }
             return *this;
         }
-        basic_fstream& operator<<( const charT* s) {
-            for (; *s != 0; s++) {
-                fputc(*s, f);
-            }
+        basic_fstream& operator<<(const eastl::basic_string<charT> s) {
+            fwrite(s.data(), sizeof(charT), s.length(), f);
             return *this;
         }
-        basic_fstream& operator<<( const std::string s) {
-            return (*this)<<s.c_str();
+        basic_fstream& operator<<(const _precision_token t) {
+            snprintf(fmt+1, sizeof(fmt)-2, "%d", t.digits);
+            return *this;
+        }
+        basic_fstream& operator<<(double d) {
+            size_t len = strlen(fmt);
+            fmt[len] = 'f';
+            fprintf(f, fmt, d);
+            fmt[len] = '\0';
+            return *this;
+        }
+        basic_fstream& operator>>(double& value) {
+            fscanf(f, "%lf", &value);
+            return *this;
         }
         basic_fstream& read(charT* s, size_t count) {
             fread(s, sizeof(charT), count, f);
@@ -161,7 +189,19 @@ namespace std {
         }
     protected:
         FILE* f;
+        char fmt[16];
     };
+    template <class charT>
+    basic_fstream<charT>& operator<<(basic_fstream<charT>& fs, charT c) {
+        fs.put(c);
+        return fs;
+    }
+    template <class charT>
+    basic_fstream<charT>& operator<<(basic_fstream<charT>& fs, const charT* s) {
+        size_t len;
+        for (len = 0; s[len] != 0; len++);
+        return fs.write(s, len);
+    }
     typedef basic_fstream<char> fstream;
     
     template <class charT>

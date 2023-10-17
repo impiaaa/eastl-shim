@@ -1,3 +1,5 @@
+#pragma once
+
 namespace std {
     enum _openmode { 
       _app = 1L << 0,
@@ -16,10 +18,13 @@ namespace std {
         _cur
     };
     enum _iostate {
-        _goodbit,
-        _badbit,
-        _failbit,
-        _eofbit
+        _goodbit = 1L << 0,
+        _badbit = 1L << 1,
+        _failbit = 1L << 2,
+        _eofbit = 1L << 3
+    };
+    struct _precision_token {
+        int digits;
     };
     class ios {
         public:
