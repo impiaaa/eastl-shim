@@ -3,6 +3,8 @@
 
 #include <EASTL/algorithm.h> // for find
 
+#pragma once
+
 namespace std {
     template <class charT>
     class basic_ostringstream {
