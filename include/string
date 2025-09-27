@@ -65,42 +65,9 @@ namespace std {
     
     using eastl::to_string;
     using eastl::to_wstring;
-    
-    template <class charT> class basic_ostringstream;
-    template <class CharT>
-    basic_ostringstream<CharT>&
-    operator<<(basic_ostringstream<CharT>& os,
-               const basic_string<CharT>& str) {
-        for (auto it = str.begin(); it != str.end(); it++) {
-            os.put(*it);
-        }
-        return os;
-    }
-    
-    template <class charT> class basic_istringstream;
-    template <class CharT>
-    basic_istringstream<CharT>& getline(basic_istringstream<CharT>& input,
-                                        basic_string<CharT>& str,
-                                        CharT delim) {
-        return input.getline(str, delim);
-    }
-    
-    template <class charT> class basic_fstream;
-    template <class CharT>
-    basic_fstream<CharT>& getline(basic_fstream<CharT>& input,
-                                  basic_string<CharT>& str,
-                                  CharT delim='\n') {
-        str.erase();
-        for (size_t i = 0; i < str.max_size() && !input.eof(); i++) {
-            CharT c = input.get();
-            if (c == delim) {
-                break;
-            }
-            str.push_back(c);
-        }
-        return input;
-    }
 }
+
+#include <string_iostream>
 
 #endif // __STRING_INC__
 
