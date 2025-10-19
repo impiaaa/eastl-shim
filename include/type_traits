@@ -30,7 +30,6 @@ namespace std {
     using eastl::is_trivially_copyable;
     using eastl::is_standard_layout;
     using eastl::is_pod;
-    using eastl::is_literal_type;
     using eastl::is_empty;
     using eastl::is_polymorphic;
     using eastl::is_abstract;
@@ -98,7 +97,6 @@ namespace std {
     using eastl::conditional;
     using eastl::common_type;
     using eastl::underlying_type;
-    using eastl::result_of;
     
     using eastl::integral_constant;
     using eastl::bool_constant;
