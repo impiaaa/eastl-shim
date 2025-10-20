@@ -8,8 +8,18 @@ namespace std {
     using eastl::add_const_t;
     using eastl::as_const;
     using eastl::declval;
+    using eastl::cmp_equal;
+    using eastl::cmp_not_equal;
+    using eastl::cmp_less;
+    using eastl::cmp_greater;
+    using eastl::cmp_less_equal;
+    using eastl::cmp_greater_equal;
+    using eastl::in_range;
+    using eastl::to_underlying;
     using eastl::integer_sequence;
+    using eastl::index_sequence;
     using eastl::make_integer_sequence;
+    using eastl::make_index_sequence;
     using eastl::index_sequence_for;
     using eastl::pair;
     using eastl::make_pair;

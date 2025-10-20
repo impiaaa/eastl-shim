@@ -1,0 +1,18 @@
+#include <EASTL/tuple.h>
+
+namespace std {
+    using eastl::tuple;
+    using eastl::ignore;
+    using eastl::make_tuple;
+    using eastl::forward_as_tuple;
+    using eastl::tie;
+    using eastl::tuple_cat;
+    using eastl::apply;
+    using eastl::make_from_tuple;
+    using eastl::tuple_size;
+    using eastl::tuple_element;
+    using eastl::tuple_element_t;
+    using eastl::get;
+    using eastl::uses_allocator;
+    using eastl::tuple_size_v;
+}
